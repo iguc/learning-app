@@ -121,8 +121,6 @@ function goBackToRange() {
         document.getElementById('learning-screen').style.display = 'none';
         document.getElementById('completion-screen').style.display = 'none';
     }
-}
-    
     const overlay = document.createElement('div');
     overlay.id = 'reset-dialog-overlay';
     overlay.style.cssText = `
