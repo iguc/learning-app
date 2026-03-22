@@ -39,7 +39,7 @@ function updateRangeCount() {
 // Load all questions from Google Sheets
 async function loadQuestions() {
     try {
-        const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/問題?key=${API_KEY}`;
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/sheet1?key=${API_KEY}`;
         const response = await fetch(url);
         const data = await response.json();
         
