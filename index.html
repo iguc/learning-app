@@ -9,6 +9,35 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Splash Screen -->
+    <div id="splash-screen" style="position:fixed; top:0; left:0; width:100%; height:100%; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); display:flex; align-items:center; justify-content:center; z-index:9999;">
+        <div style="text-align:center;">
+            <img src="icon-512.png" alt="App Icon" style="width:150px; height:150px; border-radius:50%; animation:pulse 1.5s infinite;">
+            <h2 style="color:white; margin-top:30px; font-size:1.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">English Learning</h2>
+        </div>
+    </div>
+
+    <style>
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
+
+    <script>
+        // Show splash screen for 5 seconds (5000ms)
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const splash = document.getElementById('splash-screen');
+                splash.style.opacity = '0';
+                splash.style.transition = 'opacity 0.5s ease-out';
+                setTimeout(function() {
+                    splash.style.display = 'none';
+                }, 500);
+            }, 5000);
+        });
+    </script>
+
     <div class="stars"></div>
     
     <div class="container">
@@ -86,7 +115,7 @@
                     <div class="question-number">
                         Problem <span id="question-num">1</span>
                     </div>
-                    <button onclick="document.getElementById('range-selector').style.display='block'; document.getElementById('learning-screen').style.display='none'; document.getElementById('completion-screen').style.display='none';" class="btn-back">
+                    <button onclick="goBackToRange()" class="btn-back">
                         <i class="fas fa-arrow-left"></i> Change Range
                     </button>
                 </div>
@@ -174,7 +203,7 @@
                     Each question was answered correctly 5 times in a row! 🌟
                 </div>
 
-                <button onclick="document.getElementById('range-selector').style.display='block'; document.getElementById('completion-screen').style.display='none'; document.getElementById('learning-screen').style.display='none';" class="btn-primary btn-large">
+                <button onclick="goBackToRange()" class="btn-primary btn-large">
                     <i class="fas fa-arrow-left"></i> Select New Range
                 </button>
             </div>
