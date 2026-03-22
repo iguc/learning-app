@@ -114,58 +114,13 @@ function startLearning() {
 
 // Go back to range selector with confirmation dialog
 function goBackToRange() {
-    const confirmed = confirm('Are you sure you want to start a new range?\n\nYour learning progress will be saved.');
+    const confirmed = confirm('Are you sure you want to start a new range?');
     
     if (confirmed) {
         document.getElementById('range-selector').style.display = 'block';
         document.getElementById('learning-screen').style.display = 'none';
         document.getElementById('completion-screen').style.display = 'none';
     }
-    const overlay = document.createElement('div');
-    overlay.id = 'reset-dialog-overlay';
-    overlay.style.cssText = `
-        position:fixed; top:0; left:0; width:100%; height:100%; 
-        background:rgba(0,0,0,0.5); z-index:1000; display:flex; 
-        align-items:center; justify-content:center;
-    `;
-    overlay.innerHTML = dialogContent;
-    document.body.appendChild(overlay);
-}
-
-function resetSession() {
-    stats = { correct: 0, total: 0 };
-    currentQuestionIndex = 0;
-    document.getElementById('reset-dialog-overlay').remove();
-    document.getElementById('range-selector').style.display = 'block';
-    document.getElementById('learning-screen').style.display = 'none';
-    document.getElementById('completion-screen').style.display = 'none';
-}
-
-function resetAllHistory() {
-    for (let i = selectedRange.start; i <= selectedRange.end; i++) {
-        if (questionStats[i]) {
-            questionStats[i] = {
-                askedCount: 0,
-                correctCount: 0,
-                recentFive: questionStats[i].isEmpty ? [true, true, true, true, true] : [],
-                answerHistory: [],
-                frequency: 1,
-                isEmpty: questionStats[i].isEmpty
-            };
-        }
-    }
-    
-    stats = { correct: 0, total: 0 };
-    currentQuestionIndex = 0;
-    
-    document.getElementById('reset-dialog-overlay').remove();
-    document.getElementById('range-selector').style.display = 'block';
-    document.getElementById('learning-screen').style.display = 'none';
-    document.getElementById('completion-screen').style.display = 'none';
-}
-
-function cancelReset() {
-    document.getElementById('reset-dialog-overlay').remove();
 }
 
 // Show completion screen
@@ -292,15 +247,12 @@ function showResult(isCorrect, userInput, question) {
         resultIcon.textContent = '🎉';
         resultTitle.textContent = 'Correct!';
         resultTitle.style.color = '#28a745';
-        resultDetails.innerHTML = `<p><span class="label">Your answer:</span> ${userInput}</p>`;
+        resultDetails.innerHTML = '<p><span class="label">Your answer:</span> ' + userInput + '</p>';
     } else {
         resultIcon.textContent = '📚';
         resultTitle.textContent = 'Not quite right';
         resultTitle.style.color = '#dc3545';
-        resultDetails.innerHTML = `
-            <p><span class="label">Your answer:</span> ${userInput}</p>
-            <p><span class="label">Correct answer:</span> ${question.correct}</p>
-        `;
+        resultDetails.innerHTML = '<p><span class="label">Your answer:</span> ' + userInput + '</p><p><span class="label">Correct answer:</span> ' + question.correct + '</p>';
     }
 
     resultDiv.style.display = 'block';
@@ -346,10 +298,10 @@ async function saveRecord(question, userInput, isCorrect, stat) {
     
     const historyData = [
         question.id,
-        overallAccuracy + '%' // 全履歴の正答率
+        overallAccuracy + '%'
     ];
     
-    // 全解答履歴を追加
+    // Add all answer history
     for (let i = 0; i < stat.answerHistory.length; i++) {
         historyData.push(stat.answerHistory[i]);
     }
