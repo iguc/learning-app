@@ -1,7 +1,7 @@
 // Configuration
-const SHEET_ID = '1IM1rOvvY95v8I8MMe84TjdMqsIrTags5DPFlmDoT-hY';
-const API_KEY = 'AIzaSyDRTlxBzzdhMruzkM6Eg0Yy774_1LnP59o';
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzYFvkjpS8rS6d_kKMp6L-RZgkwB0zOV_8aVSNIgsbjcZVmls3rQuEuXKEYAh5FOK06/exec';
+const SHEET_ID = 'YOUR_SHEET_ID_HERE';
+const API_KEY = 'YOUR_API_KEY_HERE';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/d/YOUR_SCRIPT_ID/userweb';
 const MASTERY_THRESHOLD = 5;
 
 let allQuestions = [];
@@ -150,6 +150,7 @@ function resetSession() {
     document.getElementById('reset-dialog-overlay').remove();
     document.getElementById('range-selector').style.display = 'block';
     document.getElementById('learning-screen').style.display = 'none';
+    document.getElementById('completion-screen').style.display = 'none';
 }
 
 function resetAllHistory() {
@@ -172,6 +173,7 @@ function resetAllHistory() {
     document.getElementById('reset-dialog-overlay').remove();
     document.getElementById('range-selector').style.display = 'block';
     document.getElementById('learning-screen').style.display = 'none';
+    document.getElementById('completion-screen').style.display = 'none';
 }
 
 function cancelReset() {
@@ -349,10 +351,19 @@ async function saveRecord(question, userInput, isCorrect, stat) {
         stat.recentFive.length === MASTERY_THRESHOLD && stat.recentFive.every(v => v) ? 'Y' : 'N'
     ];
 
-    // History detail data (first 10 attempts)
-    const historyData = [question.id];
-    for (let i = 0; i < 10; i++) {
-        historyData.push(stat.answerHistory[i] || '-');
+    // History detail data with overall accuracy
+    const overallAccuracy = stat.askedCount > 0 
+        ? Math.round((stat.correctCount / stat.askedCount) * 100) 
+        : 0;
+    
+    const historyData = [
+        question.id,
+        overallAccuracy + '%' // 全履歴の正答率
+    ];
+    
+    // 全解答履歴を追加
+    for (let i = 0; i < stat.answerHistory.length; i++) {
+        historyData.push(stat.answerHistory[i]);
     }
 
     try {
