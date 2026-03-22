@@ -112,15 +112,37 @@ function startLearning() {
     displayQuestion();
 }
 
-// Go back to range selector with confirmation dialog
+// Go back to range selector with custom confirmation dialog
 function goBackToRange() {
-    const confirmed = confirm('Are you sure you want to start a new range?');
+    const dialogHTML = `
+        <div style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center;">
+            <div style="background:white; padding:30px; border-radius:15px; box-shadow:0 10px 40px rgba(0,0,0,0.3); max-width:350px; text-align:center;">
+                <h3 style="margin:0 0 15px 0; color:#333; font-size:1.3em;">Change Range?</h3>
+                <p style="margin:0 0 25px 0; color:#666; font-size:0.95em;">Your learning progress will be saved.</p>
+                
+                <div style="display:flex; gap:10px;">
+                    <button onclick="document.getElementById('confirm-dialog').remove();" style="flex:1; padding:12px; background:#e0e0e0; color:#333; border:none; border-radius:8px; cursor:pointer; font-weight:600; font-size:0.95em;">
+                        Cancel
+                    </button>
+                    <button onclick="confirmChangeRange();" style="flex:1; padding:12px; background:#667eea; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:600; font-size:0.95em;">
+                        Change
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
     
-    if (confirmed) {
-        document.getElementById('range-selector').style.display = 'block';
-        document.getElementById('learning-screen').style.display = 'none';
-        document.getElementById('completion-screen').style.display = 'none';
-    }
+    const dialog = document.createElement('div');
+    dialog.id = 'confirm-dialog';
+    dialog.innerHTML = dialogHTML;
+    document.body.appendChild(dialog);
+}
+
+function confirmChangeRange() {
+    document.getElementById('confirm-dialog').remove();
+    document.getElementById('range-selector').style.display = 'block';
+    document.getElementById('learning-screen').style.display = 'none';
+    document.getElementById('completion-screen').style.display = 'none';
 }
 
 // Show completion screen
