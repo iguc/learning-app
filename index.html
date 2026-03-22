@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Learning App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="stars"></div>
+    
+    <div class="container">
+        <!-- Range Selection Screen -->
+        <div id="range-selector" class="range-selector">
+            <div class="header">
+                <h1>
+                    <i class="fas fa-book-open"></i>
+                    English Learning
+                </h1>
+                <p class="subtitle">Choose your learning range</p>
+            </div>
+
+            <div class="range-card">
+                <h2>Select Problem Range</h2>
+                <p class="description">Enter the problem numbers you want to practice with</p>
+                
+                <div class="input-group">
+                    <label for="start-num">Start Problem Number</label>
+                    <input type="number" id="start-num" min="1" max="3300" value="1" placeholder="1">
+                </div>
+
+                <div class="input-group">
+                    <label for="end-num">End Problem Number</label>
+                    <input type="number" id="end-num" min="1" max="3300" value="100" placeholder="3300">
+                </div>
+
+                <p class="range-info">
+                    Problems: <span id="range-count">100</span> | 
+                    Total Available: 3300
+                </p>
+
+                <button onclick="startLearning()" class="btn-primary btn-large">
+                    <i class="fas fa-play"></i> Start Learning
+                </button>
+            </div>
+        </div>
+
+        <!-- Learning Screen -->
+        <div id="learning-screen" style="display:none;">
+        <div class="header">
+            <h1>
+                <i class="fas fa-book-open"></i>
+                English Learning
+            </h1>
+            <p class="subtitle">Master English through practice</p>
+        </div>
+        
+        <div class="stats-board">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-content">
+                    <span class="stat-label">Accuracy</span>
+                    <span class="stat-value" id="accuracy">0%</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-content">
+                    <span class="stat-label">Correct</span>
+                    <span class="stat-value" id="correctCount">0</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📝</div>
+                <div class="stat-content">
+                    <span class="stat-label">Total</span>
+                    <span class="stat-value" id="answeredCount">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="question-container" class="question-card">
+            <div class="question-header">
+                <div class="question-number">
+                    Problem <span id="question-num">1</span>
+                </div>
+                <button onclick="goBackToRange()" class="btn-back">
+                    <i class="fas fa-arrow-left"></i> Change Range
+                </button>
+            </div>
+            
+            <div class="question-stats">
+                <div class="stat-item">
+                    <span class="label">Times Asked:</span>
+                    <span class="value" id="asked-count">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="label">Overall Accuracy:</span>
+                    <span class="value" id="overall-accuracy">0%</span>
+                </div>
+                <div class="stat-item">
+                    <span class="label">Recent 5:</span>
+                    <span class="value" id="recent-three">-</span>
+                </div>
+            </div>
+
+            <div class="question-text-box">
+                <h2 id="question-text"></h2>
+                <p class="question-translation" id="question-translation"></p>
+            </div>
+
+            <div class="input-section">
+                <input 
+                    type="text" 
+                    id="user-answer" 
+                    placeholder="Enter your answer here..."
+                    onkeypress="handleKeyPress(event)"
+                    autocomplete="off"
+                >
+            </div>
+
+            <div class="button-group">
+                <button id="submit-btn" onclick="submitAnswer()" class="btn-primary">
+                    <i class="fas fa-check"></i> Check Answer
+                </button>
+            </div>
+        </div>
+
+        <div id="result" class="result-card" style="display:none;">
+            <div id="result-icon" class="result-icon"></div>
+            <h3 id="result-title"></h3>
+            <div id="result-details" class="result-details"></div>
+            <button id="next-btn" onclick="nextQuestion()" class="btn-primary">
+                <i class="fas fa-arrow-right"></i> Next Question
+            </button>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Loading questions...</p>
+        </div>
+
+        <!-- Completion Screen -->
+        <div id="completion-screen" style="display:none;">
+            <div class="header">
+                <h1>
+                    <i class="fas fa-book-open"></i>
+                    English Learning
+                </h1>
+            </div>
+
+            <div class="completion-card">
+                <div class="completion-icon">🎊</div>
+                <h2>Congratulations!</h2>
+                <p class="completion-message">
+                    You've mastered all questions in this range!
+                </p>
+                
+                <div class="completion-stats">
+                    <div class="stat-item">
+                        <span class="label">Range Completed</span>
+                        <span class="value" id="completed-range">1 - 100</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="label">Session Accuracy</span>
+                        <span class="value" id="session-accuracy">95%</span>
+                    </div>
+                </div>
+
+                <div class="completion-message-sub">
+                    Each question was answered correctly 5 times in a row! 🌟
+                </div>
+
+                <button onclick="goBackToRange()" class="btn-primary btn-large">
+                    <i class="fas fa-arrow-left"></i> Select New Range
+                </button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
