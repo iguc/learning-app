@@ -1,7 +1,7 @@
 // Configuration
 const SHEET_ID = 'YOUR_SHEET_ID_HERE';
 const API_KEY = 'YOUR_API_KEY_HERE';
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/d/YOUR_SCRIPT_ID/userweb';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzYFvkjpS8rS6d_kKMp6L-RZgkwB0zOV_8aVSNIgsbjcZVmls3rQuEuXKEYAh5FOK06/exec';
 const MASTERY_THRESHOLD = 5;
 
 let allQuestions = [];
