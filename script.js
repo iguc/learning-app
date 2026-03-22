@@ -114,24 +114,14 @@ function startLearning() {
 
 // Go back to range selector with confirmation dialog
 function goBackToRange() {
-    const dialogContent = `
-        <div style="background:white; padding:30px; border-radius:12px; box-shadow:0 10px 40px rgba(0,0,0,0.2); max-width:400px;">
-            <h3 style="margin-bottom:15px; color:#333;">Reset Learning?</h3>
-            <p style="color:#666; margin-bottom:25px;">What would you like to do?</p>
-            
-            <button onclick="resetSession()" style="width:100%; padding:12px; background:#dc3545; color:white; border:none; border-radius:8px; cursor:pointer; margin-bottom:10px; font-weight:600;">
-                Reset This Session Only
-            </button>
-            
-            <button onclick="resetAllHistory()" style="width:100%; padding:12px; background:#ff6b6b; color:white; border:none; border-radius:8px; cursor:pointer; margin-bottom:10px; font-weight:600;">
-                Reset All History (Complete Restart)
-            </button>
-            
-            <button onclick="cancelReset()" style="width:100%; padding:12px; background:#6c757d; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:600;">
-                Continue Learning
-            </button>
-        </div>
-    `;
+    const confirmed = confirm('Are you sure you want to start a new range?\n\nYour learning progress will be saved.');
+    
+    if (confirmed) {
+        document.getElementById('range-selector').style.display = 'block';
+        document.getElementById('learning-screen').style.display = 'none';
+        document.getElementById('completion-screen').style.display = 'none';
+    }
+}
     
     const overlay = document.createElement('div');
     overlay.id = 'reset-dialog-overlay';
