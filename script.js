@@ -2,7 +2,7 @@
 const SHEET_ID = '1IM1rOvvY95v8I8MMe84TjdMqsIrTags5DPFlmDoT-hY';
 const API_KEY = 'AIzaSyDRTlxBzzdhMruzkM6Eg0Yy774_1LnP59o';
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzYFvkjpS8rS6d_kKMp6L-RZgkwB0zOV_8aVSNIgsbjcZVmls3rQuEuXKEYAh5FOK06/exec';
-const MASTERY_THRESHOLD = 5;
+const MASTERY_THRESHOLD = 3;
 
 let allQuestions = [];
 let filteredQuestions = [];
